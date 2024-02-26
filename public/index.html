@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <link rel="apple-touch-icon" href="/logo192.png" />
+
+  <link rel="manifest" href="/manifest.json" />
+
+  <link rel="shortcut icon" href="#images/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.gstatic.com/">
+
+  <!------------------ Fonts ------------------>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Allura&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+  
+  <!--------------- Stylesheets --------------->
+  <link rel="stylesheet" href="/css/plugins/swiper.min.css" type="text/css" />
+  <link rel="stylesheet" href="/css/style.css" type="text/css" />
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <title>Second Stage</title>
+</head>
+
+<body class="ct_golden_bg">
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+ 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="js/plugins/jquery.min.js"></script>
+  <script src="js/plugins/bootstrap.bundle.min.js"></script>
+  <script src="js/plugins/bootstrap-slider.min.js"></script>
+
+  <!-- <script src="js/plugins/swiper.min.js"></script> -->
+  <script src="js/plugins/countdown.js"></script>
+  <script src="js/plugins/jquery.fancybox.js"></script>
+
+ 
+  <script src="js/theme.js"></script>
+  <script>
+    
+    $(document).ready(function() {
+      document.getElementById('pro-image')?.addEventListener('change', readImage, false);
+      
+      $( ".preview-images-zone")?.sortable;
+      
+      $(document).on('click', '.image-cancel', function() {
+          let no = $(this).data('no');
+          $(".preview-image.preview-show-"+ no).remove();
+      });
+    });
+    
+    
+    var num = 0;
+    function readImage() {
+      if (window.File && window.FileList && window.FileReader) {
+          var files = event.target.files; //FileList object
+          var output = $(".preview-images-zone");
+    
+          for (let i = 0; i < files.length; i++) {
+              var file = files[i];
+              var checkdiv = $('div.preview-image').length;
+             // lemit line
+              if (num <= 5 || checkdiv <= 5){  
+               
+                var num = checkdiv;
+                if (!file.type.match('image')) continue;
+                
+                var picReader = new FileReader();
+                
+                picReader?.addEventListener('load', function (event) {
+                    var picFile = event.target;
+                    var html =  '<div class="preview-image preview-show-' + num + '">' +
+                                '<div class="image-cancel" data-no="' + num + '">x</div>' +
+                                '<div class="image-zone"><img id="pro-img-' + num + '" src="' + picFile.result + '"></div>' ;
+    
+                    output.append(html);
+                    num = num + 1;
+                });
+            }
+              picReader.readAsDataURL(file);
+          }
+          // $("#pro-image").val('');
+      } else {
+          console.log('Browser not support');
+      }
+    }
+
+
+
+    </script>
+
+
+</body>
+
+</html>
